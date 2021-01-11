@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Main } from '../pages';
+import { Main } from '../screens';
 import { Colors } from '../styles';
 
 const Stack = createStackNavigator();
@@ -19,7 +19,7 @@ const MainNavigator = () => (
           headerTintColor: Colors.BLACK,
           headerTitleStyle: {
             fontWeight: "700",
-            fontSize: 20
+            fontSize: 17,
           },
         }}
       />
