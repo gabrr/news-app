@@ -7,9 +7,14 @@ import { Arrow } from '../../atoms'
 import { getTheThreeFirstNames, maxTitleCharacters } from './helpers'
 import styles from './styles'
 
-const GlanceRow: React.FC<{ data: INews }> = ({ data }) => {
+interface Props {
+    data: INews,
+    onPress?: () => any
+}
+
+const GlanceRow: React.FC<Props> = ({ data, onPress }) => {
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={[styles.bottomBoder, styles.row, styles.rowContainer]}>
                 <Image
                     source={{ 

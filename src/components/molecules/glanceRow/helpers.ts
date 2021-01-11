@@ -7,7 +7,6 @@ export const getTheThreeFirstNames = (text: string) => {
     const names: any = text.split(' ')
     if (names.length <= 3) return text
     if (names.length > 3) {
-        console.log(names)
         return names.slice(0, 3).join(' ')
     }    
 }

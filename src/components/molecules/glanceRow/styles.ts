@@ -37,15 +37,15 @@ export default StyleSheet.create({
     },
     header: {
         fontWeight: '700',
-        width: getWidth() * 0.7,
+        width: getWidth() * 0.60,
         fontSize: 16,
         color: Colors.BLACK,
         flexWrap: 'wrap',
         lineHeight: 22,
     },
     iconIndicator: {
-        height: 20,
-        width: 20,
+        height: 17,
+        width: 17,
         marginRight: getWidth() * 0.01,
         zIndex: 4,
     },
