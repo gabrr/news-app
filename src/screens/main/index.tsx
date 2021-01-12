@@ -15,6 +15,8 @@ import { INews } from '../../types/responses'
 import { Modalize as IModalize} from 'react-native-modalize'
 // functions
 import { getNewsPosts } from '../../services/getNewsPosts'
+import { SORT_OPTIONS } from '../../constants'
+import { sortNews } from './helpers'
 
 
 interface Props {
@@ -26,15 +28,10 @@ interface Props {
 const Main: React.FC<Props> = ({ navigation, route }) => {
     const [news, setnews] = useState<INews[]>([])
     const [loading, setloading] = useState(true)
-    const [showPicker, setshowPicker] = useState(false)
-    const [pickerValue, setpickerValue] = useState('')
-
-    const togglePicker = () => setshowPicker(!showPicker)
+    const [sort, setsort] = useState<'Date' | 'Title' | 'Authors'>('Date')
 
     const modalizeRef = useRef<IModalize>()
     const onOpen = () => modalizeRef.current?.open()
-
-    console.log(modalizeRef, 'moda')
 
     useEffect(() => {
         navigation.setOptions({
@@ -56,6 +53,9 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
     }, [])
 
     
+    useEffect(() => {
+        setnews(sortNews(news, sort))
+    }, [sort])
 
     return (
         <>
@@ -76,7 +76,9 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
                         )}
                     </ScrollView>
                 }
-                <Modalize {...{ pickerValue, setpickerValue, ownRef: modalizeRef }} />
+                <Modalize {...{ title: 'Sort By', ownRef: modalizeRef }} >
+                    <Picker {...{ value: sort, setValue: setsort, options: SORT_OPTIONS }} />
+                </Modalize>
             </SafeAreaView>
         </>
     )

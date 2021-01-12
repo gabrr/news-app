@@ -1,1 +1,5 @@
-export const SORT_OPTIONS = ['Date', 'Title', 'Author']
+export const SORT_OPTIONS = [
+    { label: 'Date', value: 'Date' },
+    { label: 'Title', value: 'Title' },
+    { label: 'Authors', value: 'Authors' }
+]
