@@ -12,6 +12,7 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         paddingLeft: 26,
+        backgroundColor: Colors.BACKGROUND,
     },
     column: {
         flexDirection: 'column',
@@ -63,5 +64,21 @@ export default StyleSheet.create({
     authors: {
         color: Colors.FADED,
         
+    },
+    leftAction: {
+        backgroundColor: Colors.BACKGROUND,
+        justifyContent: 'center'
+    },
+    leftActionText: {
+        marginLeft: getWidth() * 0.05,
+        marginRight: getWidth() * 0.05,
+    },
+    titleRead: {
+        color: Colors.FADED,
+        fontWeight: '400',
+    },
+    titleUnread: {
+        color: Colors.BLACK,
+        fontWeight: '700',
     }
 })
