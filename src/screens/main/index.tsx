@@ -2,7 +2,7 @@
 import styles from './styles'
 // libraries
 import React, { useEffect, useRef, useState } from 'react'
-import { ActivityIndicator, RefreshControl, SafeAreaView, StatusBar, Text, View } from 'react-native'
+import { RefreshControl, SafeAreaView, StatusBar } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { FlatList } from 'react-native-gesture-handler'
