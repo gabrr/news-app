@@ -1,10 +1,8 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Main, Details } from '../screens';
 import { Colors } from '../styles';
-import { Button } from 'react-native';
-import { Modalize } from 'react-native-modalize';
 
 const Stack = createStackNavigator();
 

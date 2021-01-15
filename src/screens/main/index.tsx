@@ -2,12 +2,12 @@
 import styles from './styles'
 // libraries
 import React, { useEffect, useRef, useState } from 'react'
-import { SafeAreaView, StatusBar, Text } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { FlatList } from 'react-native-gesture-handler'
 // components
-import { GlanceRow, Picker, ScreenLoader } from '../../components/molecules'
+import { GlanceRow, Picker, ScreenLoader, ScreenError } from '../../components/molecules'
 import { HeaderButton } from '../../components/atoms'
 import { Modalize } from '../../components/organisms'
 // types
@@ -29,6 +29,7 @@ export type NewsParsed = INews & { id: string , isRead: boolean }
 
 const Main: React.FC<Props> = ({ navigation, route }) => {
     const [news, setnews] = useState<NewsParsed[]>([])
+    const [error, seterror] = useState<boolean>(false)
     const [loading, setloading] = useState(true)
     const [sort, setsort] = useState<'Date' | 'Title' | 'Authors'>('Date')
 
@@ -41,24 +42,27 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
         })
     }, [])
 
+    const fetchNewsPosts = () => getNewsPosts()
+        .then(({ data, error }) => {
+            setnews(sortNews(parseNews(data), sort))
+            setloading(false)
+            seterror(error)
+        })
+        .catch(err => {
+            console.error(err)
+            seterror(true)
+            setloading(false)
+            setnews([])
+        })
+
     useEffect(() => {
-        getNewsPosts()
-            .then(({ data }) => {
-                setnews(sortNews(parseNews(data), sort))
-                setloading(false)
-            })
-            .catch(err => {
-                console.error(err)
-                setloading(false)
-                setnews([])
-            })
+        fetchNewsPosts()
     }, [])
 
     
     useEffect(() => {
         setnews(sortNews(news, sort))
     }, [sort])
-
 
     const markReadUnread = (_id: string, toggle = true) => {
         const item = news.filter(({ id }) => id === _id)[0]
@@ -81,7 +85,8 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
             barStyle="dark-content"
         />
             <SafeAreaView style={styles.container}>
-                {loading ? <ScreenLoader/> : 
+                {loading ? <ScreenLoader /> : (
+                    error ? <ScreenError callback={fetchNewsPosts} /> :
                     <FlatList
                         style={styles.scrollContainer}
                         data={news}
@@ -94,7 +99,7 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
                                 onPress={() => onRowClick(item.id, item)}
                             />}
                     />
-                }
+                )}
                 <Modalize {...{ title: 'Sort By', ownRef: modalizeRef }} >
                     <Picker {...{ value: sort, setValue: setsort, options: SORT_OPTIONS }} />
                 </Modalize>

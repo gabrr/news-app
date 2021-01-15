@@ -1,9 +1,9 @@
 // styles
 import styles from './styles'
 // libraries
-import React from 'react'
+import React, { useRef } from 'react'
 import { Image, Text, View } from 'react-native'
-import { BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler'
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 // types
 import { NewsParsed } from '../../../screens/main'
@@ -12,21 +12,25 @@ import { getWidth } from '../../../utils/helpers'
 import { getTheThreeFirstNames, maxTitleCharacters } from './helpers'
 // components
 import { Arrow } from '../../atoms'
-import { Colors } from '../../../styles'
 
 interface Props {
     data: NewsParsed
     onPress?: () => any
-    markReadUnread: (id: any) => any
+    markReadUnread: (id: any, toggle?: boolean) => any
 }
 
 const GlanceRow: React.FC<Props> = ({ data, onPress, markReadUnread }) => {
 
     const { id, isRead } = data
 
+    const rowRef = useRef<Swipeable>(null)
 
-    const LeftAction = (_: any, dragX: any) => 
-        <RectButton style={styles.leftAction} onPress={() => markReadUnread(id)}>
+    const LeftAction = () => 
+        <RectButton style={styles.leftAction} onPress={() => {
+                markReadUnread(id)
+                rowRef?.current?.close()
+            }}
+        >
             <Text style={styles.leftActionText}>
                 {!isRead ? 'Mark as Read' : 'Mark as Unread'}
             </Text>
@@ -34,8 +38,8 @@ const GlanceRow: React.FC<Props> = ({ data, onPress, markReadUnread }) => {
 
     return (
         <Swipeable
+            ref={rowRef}
             renderLeftActions={LeftAction}
-            
         >
             <TouchableOpacity style={styles.container} onPress={onPress}>
                 <View style={[styles.bottomBoder, styles.row, styles.rowContainer]}>

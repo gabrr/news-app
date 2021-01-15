@@ -4,8 +4,6 @@ import styles from './styles';
 import React from 'react'
 import { Text } from 'react-native'
 import { Modalize } from "react-native-modalize";
-// compoents
-import { Picker } from '../../molecules';
 
 interface Props { 
     ownRef: any
