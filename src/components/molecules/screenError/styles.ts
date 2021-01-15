@@ -13,8 +13,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     loader: {
-        width: getWidth() * 0.5,
-        top: -30,
+        width: getWidth(),
+        top: -40,
     },
     msg: {
         ...FONTS.body,

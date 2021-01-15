@@ -2,7 +2,7 @@
 import styles from './styles'
 // libraries
 import React, { useEffect, useRef, useState } from 'react'
-import { SafeAreaView, StatusBar } from 'react-native'
+import { ActivityIndicator, RefreshControl, SafeAreaView, StatusBar, Text, View } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { FlatList } from 'react-native-gesture-handler'
@@ -17,6 +17,7 @@ import { Modalize as IModalize} from 'react-native-modalize'
 import { getNewsPosts } from '../../services/getNewsPosts'
 import { SORT_OPTIONS } from '../../constants'
 import { parseNews, sortNews } from './helpers'
+import { Colors } from '../../styles'
 
 
 interface Props {
@@ -88,6 +89,13 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
                 {loading ? <ScreenLoader /> : (
                     error ? <ScreenError callback={fetchNewsPosts} /> :
                     <FlatList
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={loading}
+                                onRefresh={fetchNewsPosts}
+                                tintColor={Colors.BLUE}
+                            />
+                        }
                         style={styles.scrollContainer}
                         data={news}
                         keyExtractor={(_, index) => `${index}`}
@@ -98,6 +106,13 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
                                 data={item}
                                 onPress={() => onRowClick(item.id, item)}
                             />}
+                        ListEmptyComponent={
+                            <ScreenError
+                                btnMsg={'Fetch news'}
+                                msg={'There\'s any news for now'}
+                                callback={fetchNewsPosts}
+                            />
+                        }
                     />
                 )}
                 <Modalize {...{ title: 'Sort By', ownRef: modalizeRef }} >
