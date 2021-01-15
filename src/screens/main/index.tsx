@@ -7,7 +7,7 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { FlatList } from 'react-native-gesture-handler'
 // components
-import { GlanceRow, Picker } from '../../components/molecules'
+import { GlanceRow, Picker, ScreenLoader } from '../../components/molecules'
 import { HeaderButton } from '../../components/atoms'
 import { Modalize } from '../../components/organisms'
 // types
@@ -81,7 +81,7 @@ const Main: React.FC<Props> = ({ navigation, route }) => {
             barStyle="dark-content"
         />
             <SafeAreaView style={styles.container}>
-                {loading ? <Text>Loading</Text> : 
+                {loading ? <ScreenLoader/> : 
                     <FlatList
                         style={styles.scrollContainer}
                         data={news}
